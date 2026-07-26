@@ -8,13 +8,13 @@ description: 理解熔断器状态机，用 CircuitBreaker 保护 Agent 工具�
 ## 🗺️ 在知识体系中的位置
 
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
-  <a href="/part3-engineering/ch07-tool-system" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第7章 工具系统</a>
+  <a href="/part3-engineering/ch07-tool-system" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第7章 工具系统</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
   <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">📍 第10章 熔断器</span>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part3-engineering/ch11-sub-agent" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第11章 子代理</a>
+  <a href="/part3-engineering/ch11-sub-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第11章 子代理</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part4-enterprise/ch13-api-gateway-agent" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第13章 API网关实战</a>
+  <a href="/part4-enterprise/ch13-api-gateway-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第13章 API网关实战</a>
 </div>
 
 第7章展示了 `ToolRegistry` 内置了 `CircuitBreaker`，本章深入这个熔断器的工作原理。理解状态机设计后，第13章和第15章企业实战将完整应用熔断器保护外部服务调用。

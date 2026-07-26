@@ -8,13 +8,13 @@ description: 掌握 HelloAgents 工具系统架构：Tool 基类、ToolRegistry�
 ## 🗺️ 在知识体系中的位置
 
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
-  <a href="/part2-paradigms/ch04-react" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第4章 ReAct</a>
+  <a href="/part2-paradigms/ch04-react" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第4章 ReAct</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
   <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">📍 第7章 工具系统</span>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part3-engineering/ch10-circuit-breaker" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第10章 熔断器</a>
+  <a href="/part3-engineering/ch10-circuit-breaker" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第10章 熔断器</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part3-engineering/ch11-sub-agent" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第11章 子代理</a>
+  <a href="/part3-engineering/ch11-sub-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第11章 子代理</a>
 </div>
 
 前三章（ReAct/Plan-Solve/Reflection）展示了 Agent 如何调用工具，本章深入工具系统的工程实现。理解 Tool 基类和 ToolRegistry，是第10章熔断器和第11章子代理的前置知识。

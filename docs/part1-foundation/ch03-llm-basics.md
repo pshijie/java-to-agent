@@ -8,15 +8,15 @@ description: 掌握 LLM 消息协议、invoke/ainvoke 接口，为 Agent 开发�
 ## 🗺️ 在知识体系中的位置
 
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
-  <a href="/part1-foundation/ch01-what-is-agent" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第1–2章 基础认知</a>
+  <a href="/part1-foundation/ch01-what-is-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第1–2章 基础认知</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
   <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">📍 第3章 LLM 基础</span>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part2-paradigms/ch04-react" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第4章 ReAct</a>
+  <a href="/part2-paradigms/ch04-react" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第4章 ReAct</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part2-paradigms/ch05-plan-solve" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第5章 Plan-Solve</a>
+  <a href="/part2-paradigms/ch05-plan-solve" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第5章 Plan-Solve</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part2-paradigms/ch06-reflection" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第6章 Reflection</a>
+  <a href="/part2-paradigms/ch06-reflection" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第6章 Reflection</a>
 </div>
 
 本章承接第2章关于 LLM Agent 的历史定位，深入 `HelloAgentsLLM` 的接口设计，掌握消息协议和同步/异步调用方式。第4–6章所有范式都以本章的 LLM 接口为基础。

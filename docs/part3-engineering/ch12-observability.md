@@ -8,13 +8,13 @@ description: 使用 TraceLogger 追踪 Agent 执行链路，构建生产级可�
 ## 🗺️ 在知识体系中的位置
 
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
-  <a href="/part3-engineering/ch07-tool-system" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第7章 工具系统</a>
+  <a href="/part3-engineering/ch07-tool-system" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第7章 工具系统</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part3-engineering/ch11-sub-agent" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第11章 子代理</a>
+  <a href="/part3-engineering/ch11-sub-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第11章 子代理</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
   <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">📍 第12章 可观测性</span>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part4-enterprise/ch13-api-gateway-agent" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第13–15章 企业实战</a>
+  <a href="/part4-enterprise/ch13-api-gateway-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第13–15章 企业实战</a>
 </div>
 
 本章是 Part 3 框架工程化的收官章节。`TraceLogger` 将之前所有组件（工具调用、熔断器触发、子代理执行）的行为记录为结构化日志，为后续的企业落地章节（第13–15章）提供可观测性基础。

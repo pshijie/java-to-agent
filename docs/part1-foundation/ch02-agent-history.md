@@ -8,13 +8,13 @@ description: 从规则引擎到 LLM Agent，理解智能体技术的演化脉络
 ## 🗺️ 在知识体系中的位置
 
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
-  <a href="/part1-foundation/ch01-what-is-agent" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第1章 初识智能体</a>
+  <a href="/part1-foundation/ch01-what-is-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第1章 初识智能体</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
   <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">📍 第2章 发展史</span>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part1-foundation/ch03-llm-basics" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第3章 LLM 基础</a>
+  <a href="/part1-foundation/ch03-llm-basics" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第3章 LLM 基础</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part2-paradigms/ch04-react" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第4–6章 三大范式 …</a>
+  <a href="/part2-paradigms/ch04-react" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第4–6章 三大范式 …</a>
 </div>
 
 本章承接第1章对 Agent 的定义，沿着历史脉络回答「Agent 是如何演化到今天这种形态的」。理解这条演化链，有助于在第3章深入 LLM 工作机制时，明白为什么 LLM 能成为 Agent 的核心引擎。

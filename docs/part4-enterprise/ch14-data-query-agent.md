@@ -8,11 +8,11 @@ description: 综合运用 PlanSolve + ContextBuilder + SessionStore，构建自�
 ## 🗺️ 在知识体系中的位置
 
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
-  <a href="/part2-paradigms/ch05-plan-solve" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第5章 Plan-Solve</a>
+  <a href="/part2-paradigms/ch05-plan-solve" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第5章 Plan-Solve</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part3-engineering/ch08-context-engineering" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第8章 上下文工程</a>
+  <a href="/part3-engineering/ch08-context-engineering" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第8章 上下文工程</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part3-engineering/ch09-session-persistence" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第9章 会话持久化</a>
+  <a href="/part3-engineering/ch09-session-persistence" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第9章 会话持久化</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
   <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">📍 第14章 数据查询实战</span>
 </div>

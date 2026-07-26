@@ -8,13 +8,13 @@ description: 理解 GSSC 流水线与 token 预算管理，构建生产级上下
 ## 🗺️ 在知识体系中的位置
 
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
-  <a href="/part1-foundation/ch03-llm-basics" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第3章 LLM 基础</a>
+  <a href="/part1-foundation/ch03-llm-basics" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第3章 LLM 基础</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part3-engineering/ch07-tool-system" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第7章 工具系统</a>
+  <a href="/part3-engineering/ch07-tool-system" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第7章 工具系统</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
   <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">📍 第8章 上下文工程</span>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part3-engineering/ch09-session-persistence" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第9章 会话持久化</a>
+  <a href="/part3-engineering/ch09-session-persistence" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第9章 会话持久化</a>
 </div>
 
 上下文工程是 Agent 工程化的核心挑战：如何在有限的 token 窗口内，把最有价值的信息塞进 Prompt。本章讲解 HelloAgents 的 GSSC 流水线和 `ContextBuilder`，第14章数据查询 Agent 直接应用本章技术。

@@ -8,11 +8,11 @@ description: 理解自评估循环与质量控制，构建能自我纠错的 Ref
 ## 🗺️ 在知识体系中的位置
 
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
-  <a href="/part1-foundation/ch03-llm-basics" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第3章 LLM 基础</a>
+  <a href="/part1-foundation/ch03-llm-basics" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第3章 LLM 基础</a>
   <span style="color:#94a3b8;font-size:16px">→</span>
   <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">📍 第6章 Reflection</span>
   <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part4-enterprise/ch13-api-gateway-agent" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第13–15章 企业实战</a>
+  <a href="/part4-enterprise/ch13-api-gateway-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第13–15章 企业实战</a>
 </div>
 
 本章是三大范式的最后一章，介绍 Reflection 自评估循环。与 ReAct（边思考边行动）和 Plan-Solve（先规划再执行）不同，Reflection 在得到初步结果后，由模型自身评估质量并迭代优化。
