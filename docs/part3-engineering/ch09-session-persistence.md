@@ -8,13 +8,13 @@ description: 掌握 SessionStore 原子写入与会话管理，实现多轮对�
 ## 🗺️ 在知识体系中的位置
 
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
-  <a href="/part3-engineering/ch08-context-engineering" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第8章 上下文工程</a>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">📍 第9章 会话持久化</span>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part3-engineering/ch11-sub-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第11章 子代理</a>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part4-enterprise/ch14-data-query-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第14章 数据查询实战</a>
+<a href="/part3-engineering/ch08-context-engineering" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第8章 上下文工程</a>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">第9章 会话持久化</span>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<a href="/part3-engineering/ch11-sub-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第11章 子代理</a>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<a href="/part4-enterprise/ch14-data-query-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第14章 数据查询实战</a>
 </div>
 
 本章将第8章的"运行时上下文管理"延伸到"跨轮次的持久化"。`SessionStore` 解决的问题是：Agent 崩溃或用户重启后，如何从上次中断的地方继续，而不是从头开始。

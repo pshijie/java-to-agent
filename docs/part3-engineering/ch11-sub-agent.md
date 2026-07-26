@@ -8,13 +8,13 @@ description: 掌握 TaskTool 子代理任务分发，实现 Agent 的并行执�
 ## 🗺️ 在知识体系中的位置
 
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
-  <a href="/part3-engineering/ch07-tool-system" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第7章 工具系统</a>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part3-engineering/ch09-session-persistence" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第9章 会话持久化</a>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">📍 第11章 子代理</span>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part4-enterprise/ch15-multi-agent-system" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第15章 多Agent实战</a>
+<a href="/part3-engineering/ch07-tool-system" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第7章 工具系统</a>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<a href="/part3-engineering/ch09-session-persistence" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第9章 会话持久化</a>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">第11章 子代理</span>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<a href="/part4-enterprise/ch15-multi-agent-system" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第15章 多Agent实战</a>
 </div>
 
 子代理机制将工具系统（第7章）和 Agent 范式（第4–6章）打通：主 Agent 通过 `TaskTool` 启动独立的子代理来处理子任务，实现上下文隔离和并行执行。第15章多 Agent 实战是本章的完整落地。

@@ -8,13 +8,13 @@ description: 理解并实现 Thought-Action-Observation 循环，构建第一个
 ## 🗺️ 在知识体系中的位置
 
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
-  <a href="/part1-foundation/ch03-llm-basics" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第3章 LLM 基础</a>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">📍 第4章 ReAct</span>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part3-engineering/ch07-tool-system" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第7章 工具系统</a>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part4-enterprise/ch13-api-gateway-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第13章 API网关实战</a>
+<a href="/part1-foundation/ch03-llm-basics" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第3章 LLM 基础</a>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">第4章 ReAct</span>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<a href="/part3-engineering/ch07-tool-system" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第7章 工具系统</a>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<a href="/part4-enterprise/ch13-api-gateway-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第13章 API网关实战</a>
 </div>
 
 本章是三大 Agent 范式的起点，也是最重要的一章。ReAct 是 HelloAgents 中 `ReActAgent` 的核心实现基础，第7章工具系统、第13章企业实战都以 ReAct 范式为基础。

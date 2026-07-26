@@ -8,13 +8,13 @@ description: 理解 Agent 的本质、感知-决策-执行循环，以及与传�
 ## 🗺️ 在知识体系中的位置
 
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
-  <span style="background:#dbeafe;color:#1d4ed8;padding:6px 14px;border-radius:8px;font-weight:600;border:1.5px solid #bfdbfe">📍 第1章 初识智能体</span>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <span style="background:#f1f5f9;color:#94a3b8;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0">第2章 发展史</span>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <span style="background:#f1f5f9;color:#94a3b8;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0">第3章 LLM 基础</span>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <span style="background:#f1f5f9;color:#94a3b8;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0">第4–6章 三大范式 …</span>
+<span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">第1章 初识智能体</span>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<a href="/part1-foundation/ch02-agent-history" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第2章 发展史</a>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<a href="/part1-foundation/ch03-llm-basics" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第3章 LLM 基础</a>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<a href="/part2-paradigms/ch04-react" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第4–6章 三大范式</a>
 </div>
 
 ## 🎯 本章你能学到什么

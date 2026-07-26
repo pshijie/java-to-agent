@@ -8,13 +8,13 @@ description: 综合运用 ReAct + ToolRegistry + CircuitBreaker + TraceLogger，
 ## 🗺️ 在知识体系中的位置
 
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
-  <a href="/part2-paradigms/ch04-react" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第4章 ReAct</a>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part3-engineering/ch10-circuit-breaker" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第10章 熔断器</a>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part3-engineering/ch12-observability" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第12章 可观测性</a>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">📍 第13章 API网关实战</span>
+<a href="/part2-paradigms/ch04-react" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第4章 ReAct</a>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<a href="/part3-engineering/ch10-circuit-breaker" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第10章 熔断器</a>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<a href="/part3-engineering/ch12-observability" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第12章 可观测性</a>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">第13章 API网关实战</span>
 </div>
 
 本章是 Part 4 的第一个企业实战，综合运用 Part 2–3 的所有组件：ReAct 范式驱动推理，ToolRegistry 管理工具集，CircuitBreaker 防止雪崩，TraceLogger 记录执行链路。

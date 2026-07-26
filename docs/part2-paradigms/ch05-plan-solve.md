@@ -8,11 +8,11 @@ description: 掌握任务分解与二阶段执行，构建能处理复杂任务�
 ## 🗺️ 在知识体系中的位置
 
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
-  <a href="/part1-foundation/ch03-llm-basics" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第3章 LLM 基础</a>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">📍 第5章 Plan-Solve</span>
-  <span style="color:#94a3b8;font-size:16px">→</span>
-  <a href="/part4-enterprise/ch14-data-query-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none;transition:background 0.2s">第14章 数据查询实战</a>
+<a href="/part1-foundation/ch03-llm-basics" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第3章 LLM 基础</a>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">第5章 Plan-Solve</span>
+<span style="color:#94a3b8;font-size:16px">→</span>
+<a href="/part4-enterprise/ch14-data-query-agent" style="background:#f8fafc;color:#3b82f6;padding:6px 14px;border-radius:8px;border:1.5px solid #bfdbfe;text-decoration:none">第14章 数据查询实战</a>
 </div>
 
 本章介绍三大范式的第二种：Plan-Solve。与 ReAct 的"边思考边行动"不同，Plan-Solve 先生成完整计划再逐步执行，适合结构清晰的确定性任务。第14章数据查询 Agent 综合运用了本章的 Plan-Solve 范式。
