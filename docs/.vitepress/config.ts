@@ -76,7 +76,7 @@ export default withMermaid(
                 ],
             },
             socialLinks: [
-                { icon: 'github', link: 'https://github.com/jjyaoao/HelloAgents' }
+                { icon: 'github', link: 'https://github.com/pshijie/java-to-agent' }
             ],
             footer: {
                 message: 'Agent 工程师成长手册 — 面向 Java 后端工程师',

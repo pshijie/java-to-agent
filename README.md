@@ -8,7 +8,7 @@
 [![HelloAgents](https://img.shields.io/badge/源码-HelloAgents-3b82f6)](https://github.com/jjyaoao/HelloAgents)
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-[📖 在线阅读](#) · [🚀 快速开始](#快速开始) · [📋 章节目录](#章节目录)
+[📖 在线阅读](https://java-to-agent-5exj.vercel.app/) · [🚀 快速开始](#快速开始) · [📋 章节目录](#章节目录)
 
 </div>
 
