@@ -29,60 +29,60 @@ description: 从规则引擎到 LLM Agent，理解智能体技术的演化脉络
 ## 📖 核心概念
 
 <div style="margin:24px 0;font-family:sans-serif">
-  <div style="display:flex;flex-direction:column;gap:0">
+<div style="display:flex;flex-direction:column;gap:0">
 
-    <!-- 阶段 1 -->
-    <div style="display:flex;gap:16px;align-items:flex-start">
-      <div style="display:flex;flex-direction:column;align-items:center">
-        <div style="width:36px;height:36px;border-radius:50%;background:#e2e8f0;color:#475569;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0">①</div>
-        <div style="width:2px;flex:1;background:#e2e8f0;margin:4px 0"></div>
-      </div>
-      <div style="padding-bottom:24px;padding-top:6px">
-        <div style="font-weight:700;color:#1e293b;margin-bottom:2px">符号 AI / 规则引擎</div>
-        <div style="font-size:12px;color:#94a3b8;margin-bottom:6px">1950s – 1980s</div>
-        <div style="font-size:13px;color:#475569">专家系统、Drools 规则引擎；人工编写 if-else 树，规则爆炸，无法泛化</div>
-      </div>
-    </div>
+<!-- 阶段 1 -->
+<div style="display:flex;gap:16px;align-items:flex-start">
+<div style="display:flex;flex-direction:column;align-items:center">
+<div style="width:36px;height:36px;border-radius:50%;background:#e2e8f0;color:#475569;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0">①</div>
+<div style="width:2px;flex:1;background:#e2e8f0;margin:4px 0"></div>
+</div>
+<div style="padding-bottom:24px;padding-top:6px">
+<div style="font-weight:700;color:#1e293b;margin-bottom:2px">符号 AI / 规则引擎</div>
+<div style="font-size:12px;color:#94a3b8;margin-bottom:6px">1950s – 1980s</div>
+<div style="font-size:13px;color:#475569">专家系统、Drools 规则引擎；人工编写 if-else 树，规则爆炸，无法泛化</div>
+</div>
+</div>
 
-    <!-- 阶段 2 -->
-    <div style="display:flex;gap:16px;align-items:flex-start">
-      <div style="display:flex;flex-direction:column;align-items:center">
-        <div style="width:36px;height:36px;border-radius:50%;background:#dbeafe;color:#1d4ed8;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0">②</div>
-        <div style="width:2px;flex:1;background:#e2e8f0;margin:4px 0"></div>
-      </div>
-      <div style="padding-bottom:24px;padding-top:6px">
-        <div style="font-weight:700;color:#1e293b;margin-bottom:2px">强化学习 Agent</div>
-        <div style="font-size:12px;color:#94a3b8;margin-bottom:6px">1990s – 2010s</div>
-        <div style="font-size:13px;color:#475569">AlphaGo、OpenAI Five；无需手写规则，但只能在明确定义的环境中工作</div>
-      </div>
-    </div>
+<!-- 阶段 2 -->
+<div style="display:flex;gap:16px;align-items:flex-start">
+<div style="display:flex;flex-direction:column;align-items:center">
+<div style="width:36px;height:36px;border-radius:50%;background:#dbeafe;color:#1d4ed8;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0">②</div>
+<div style="width:2px;flex:1;background:#e2e8f0;margin:4px 0"></div>
+</div>
+<div style="padding-bottom:24px;padding-top:6px">
+<div style="font-weight:700;color:#1e293b;margin-bottom:2px">强化学习 Agent</div>
+<div style="font-size:12px;color:#94a3b8;margin-bottom:6px">1990s – 2010s</div>
+<div style="font-size:13px;color:#475569">AlphaGo、OpenAI Five；无需手写规则，但只能在明确定义的环境中工作</div>
+</div>
+</div>
 
-    <!-- 阶段 3 -->
-    <div style="display:flex;gap:16px;align-items:flex-start">
-      <div style="display:flex;flex-direction:column;align-items:center">
-        <div style="width:36px;height:36px;border-radius:50%;background:#ede9fe;color:#6d28d9;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0">③</div>
-        <div style="width:2px;flex:1;background:#e2e8f0;margin:4px 0"></div>
-      </div>
-      <div style="padding-bottom:24px;padding-top:6px">
-        <div style="font-weight:700;color:#1e293b;margin-bottom:2px">预训练语言模型</div>
-        <div style="font-size:12px;color:#94a3b8;margin-bottom:6px">2018 – 2022</div>
-        <div style="font-size:13px;color:#475569">BERT、GPT-2；能理解语言，但没有"行动能力"，只能生成文本</div>
-      </div>
-    </div>
+<!-- 阶段 3 -->
+<div style="display:flex;gap:16px;align-items:flex-start">
+<div style="display:flex;flex-direction:column;align-items:center">
+<div style="width:36px;height:36px;border-radius:50%;background:#ede9fe;color:#6d28d9;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0">③</div>
+<div style="width:2px;flex:1;background:#e2e8f0;margin:4px 0"></div>
+</div>
+<div style="padding-bottom:24px;padding-top:6px">
+<div style="font-weight:700;color:#1e293b;margin-bottom:2px">预训练语言模型</div>
+<div style="font-size:12px;color:#94a3b8;margin-bottom:6px">2018 – 2022</div>
+<div style="font-size:13px;color:#475569">BERT、GPT-2；能理解语言，但没有"行动能力"，只能生成文本</div>
+</div>
+</div>
 
-    <!-- 阶段 4 -->
-    <div style="display:flex;gap:16px;align-items:flex-start">
-      <div style="display:flex;flex-direction:column;align-items:center">
-        <div style="width:36px;height:36px;border-radius:50%;background:#dcfce7;color:#15803d;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0">④</div>
-      </div>
-      <div style="padding-top:6px">
-        <div style="font-weight:700;color:#1e293b;margin-bottom:2px">LLM Agent <span style="background:#dcfce7;color:#15803d;font-size:11px;padding:2px 8px;border-radius:4px;margin-left:6px">当前阶段</span></div>
-        <div style="font-size:12px;color:#94a3b8;margin-bottom:6px">2022 – 至今</div>
-        <div style="font-size:13px;color:#475569">GPT-4 + Function Calling；LLM 从文字生成器升级为行动决策者，通用 Agent 成为现实</div>
-      </div>
-    </div>
+<!-- 阶段 4 -->
+<div style="display:flex;gap:16px;align-items:flex-start">
+<div style="display:flex;flex-direction:column;align-items:center">
+<div style="width:36px;height:36px;border-radius:50%;background:#dcfce7;color:#15803d;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0">④</div>
+</div>
+<div style="padding-top:6px">
+<div style="font-weight:700;color:#1e293b;margin-bottom:2px">LLM Agent <span style="background:#dcfce7;color:#15803d;font-size:11px;padding:2px 8px;border-radius:4px;margin-left:6px">当前阶段</span></div>
+<div style="font-size:12px;color:#94a3b8;margin-bottom:6px">2022 – 至今</div>
+<div style="font-size:13px;color:#475569">GPT-4 + Function Calling；LLM 从文字生成器升级为行动决策者，通用 Agent 成为现实</div>
+</div>
+</div>
 
-  </div>
+</div>
 </div>
 
 ### 第一阶段：符号 AI 与规则引擎（1950s–1980s）
