@@ -1,0 +1,359 @@
+---
+title: 第7章 工具系统
+description: 掌握 HelloAgents 工具系统架构：Tool 基类、ToolRegistry、ToolResponse
+---
+
+# 第7章 工具系统
+
+## 🗺️ 在知识体系中的位置
+
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0;font-family:sans-serif;font-size:13px">
+  <a href="/part2-paradigms/ch04-react" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第4章 ReAct</a>
+  <span style="color:#94a3b8;font-size:16px">→</span>
+  <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">📍 第7章 工具系统</span>
+  <span style="color:#94a3b8;font-size:16px">→</span>
+  <a href="/part3-engineering/ch10-circuit-breaker" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第10章 熔断器</a>
+  <span style="color:#94a3b8;font-size:16px">→</span>
+  <a href="/part3-engineering/ch11-sub-agent" style="background:#f1f5f9;color:#64748b;padding:6px 14px;border-radius:8px;border:1.5px solid #e2e8f0;text-decoration:none">第11章 子代理</a>
+</div>
+
+前三章（ReAct/Plan-Solve/Reflection）展示了 Agent 如何调用工具，本章深入工具系统的工程实现。理解 Tool 基类和 ToolRegistry，是第10章熔断器和第11章子代理的前置知识。
+
+## 🎯 本章你能学到什么
+
+- 能说明 `Tool` 基类与 `ToolResponse` 协议的设计意图，以及为什么要返回结构化对象而非字符串
+- 能用 `@tool_action` 装饰器注册工具，理解它与 Java `@Component` 的对应关系
+- 能解释 `ToolRegistry` 的熔断器集成方式，以及为什么注册表天然是插入熔断器的最佳位置
+- 能实现一个完整的自定义工具（继承 `Tool`，实现 `run` 和 `get_parameters`）
+
+## 📖 核心概念
+
+### `Tool` 基类：抽象工具契约
+
+**结论**：`Tool` 是所有工具的抽象基类，定义了两个必须实现的抽象方法：`run(parameters)` 执行工具，`get_parameters()` 描述参数结构。
+
+```python
+# 来源: hello_agents/tools/base.py — Tool 基类核心接口
+from abc import ABC, abstractmethod
+
+class Tool(ABC):
+    def __init__(self, name: str, description: str, expandable: bool = False):
+        self.name = name            # 工具名（LLM 调用时使用）
+        self.description = description  # 工具描述（注入到 LLM 的 System Prompt）
+        self.expandable = expandable
+
+    @abstractmethod
+    def run(self, parameters: Dict[str, Any]) -> ToolResponse:
+        """执行工具，返回 ToolResponse（而非字符串）"""
+        pass
+
+    @abstractmethod
+    def get_parameters(self) -> List[ToolParameter]:
+        """返回参数定义列表，用于生成 Function Calling Schema"""
+        pass
+```
+
+::: tip ⚙️ 工程技巧：返回 `ToolResponse` 而非字符串
+
+早期工具系统直接返回字符串，导致调用方无法区分"成功结果"和"错误信息"——两者都是字符串，只能靠 LLM 感知语义来判断。`ToolResponse` 引入了结构化状态：`SUCCESS/PARTIAL/ERROR`，让 `CircuitBreaker` 能以程序化的方式判断"这次调用是否成功"，而不依赖 LLM 解析字符串。这等价于 Java 中用 `ResponseEntity<T>` 替代裸 `String` 返回——永远用类型系统表达语义。
+:::
+
+### `ToolResponse`：三态响应协议
+
+```python
+# 来源: hello_agents/tools/response.py
+class ToolStatus(Enum):
+    SUCCESS = "success"  # 完全成功
+    PARTIAL = "partial"  # 部分成功（如截断、降级）
+    ERROR   = "error"    # 执行失败
+
+@dataclass
+class ToolResponse:
+    status: ToolStatus       # 状态码
+    text: str                # 给 LLM 阅读的文本（人类可读）
+    data: Dict[str, Any]     # 给程序读取的结构化数据
+    error_info: Optional[Dict[str, str]]  # 错误信息（仅 ERROR 时）
+    stats: Optional[Dict[str, Any]]       # 执行统计（time_ms 等）
+
+    # 工厂方法：快速创建三种状态
+    @classmethod
+    def success(cls, text: str, data=None, ...) -> 'ToolResponse': ...
+    @classmethod
+    def partial(cls, text: str, data=None, ...) -> 'ToolResponse': ...
+    @classmethod
+    def error(cls, code: str, message: str, ...) -> 'ToolResponse': ...
+```
+
+### `@tool_action` 装饰器：函数转工具
+
+```python
+# 来源: hello_agents/tools/base.py — tool_action 装饰器
+def tool_action(name: str = None, description: str = None):
+    """将方法标记为可自动注册的工具 action"""
+    def decorator(func: Callable):
+        func._is_tool_action = True     # 标记标志
+        func._tool_name = name          # 工具名
+        func._tool_description = description  # 工具描述
+        return func
+    return decorator
+```
+
+::: details ☕ Java 对比：`@tool_action` vs `@Component + @Bean`
+
+```python
+# Python：@tool_action 装饰器，运行时立即标记
+@tool_action(name="query_db", description="查询数据库")
+def query_database(sql: str) -> str:
+    return execute_sql(sql)
+```
+
+```java
+// Java：@Service + 自定义注解，编译期标记 + Spring 扫描注册
+@Service
+@ToolDefinition(name = "query_db", description = "查询数据库")
+public class DatabaseQueryTool {
+    public String queryDatabase(String sql) {
+        return executeSql(sql);
+    }
+}
+```
+
+核心差异：Python decorator 在**函数对象**上打标记（运行时），Java annotation 在**字节码**上打标记（编译时），Spring 在容器启动时扫描并注册。两者都实现了"声明式工具注册"。
+:::
+
+### `ToolRegistry`：工具注册中心
+
+```python
+# 来源: hello_agents/tools/registry.py — ToolRegistry 核心
+class ToolRegistry:
+    def __init__(self, circuit_breaker: Optional[CircuitBreaker] = None):
+        self._tools: dict[str, Tool] = {}       # Tool 对象注册表
+        self._functions: dict[str, dict] = {}   # 函数工具注册表
+        self.circuit_breaker = circuit_breaker or CircuitBreaker()  # 默认启用熔断
+
+    def register_tool(self, tool: Tool, auto_expand: bool = True):
+        """注册 Tool 对象，可选自动展开 @tool_action 方法"""
+        if auto_expand and tool.expandable:
+            expanded_tools = tool.get_expanded_tools()  # 展开成多个子工具
+            for sub_tool in expanded_tools:
+                self._tools[sub_tool.name] = sub_tool
+        else:
+            self._tools[tool.name] = tool
+
+    def execute_tool(self, name: str, input_text: str) -> ToolResponse:
+        """执行工具（带熔断器保护）"""
+        # 1. 先检查熔断器
+        if self.circuit_breaker.is_open(name):
+            return ToolResponse.error(code="CIRCUIT_OPEN", message=f"工具 '{name}' 已熔断")
+
+        # 2. 执行工具
+        response = self._execute(name, input_text)
+
+        # 3. 记录结果到熔断器（成功→重置计数，失败→增加计数）
+        self.circuit_breaker.record_result(name, response)
+        return response
+```
+
+::: tip ⚙️ 工程技巧：`ToolRegistry` ≈ Spring `ApplicationContext`
+
+`ToolRegistry` 是工具的"容器"，与 Spring `ApplicationContext` 极为相似：
+- `register_tool(tool)` ≈ Spring 扫描 `@Component` 并注册 Bean
+- `get_tool(name)` ≈ `applicationContext.getBean(name)`
+- `execute_tool(name, input)` ≈ 通过代理调用 Bean 方法（且代理内置了 AOP 切面——熔断器）
+
+关键设计：熔断器内置在 `execute_tool` 中，所有工具调用必须经过这一层，天然实现了横切关注点的统一管理。
+:::
+
+## 💻 代码实战
+
+### 实现自定义工具
+
+```python
+# 来源: hello_agents/tools/base.py (Tool, ToolParameter, ToolResponse)
+# 自定义工具示例：继承 Tool 基类
+from hello_agents.tools.base import Tool, ToolParameter
+from hello_agents.tools.response import ToolResponse, ToolStatus
+
+class DatabaseQueryTool(Tool):
+    """数据库查询工具"""
+
+    def __init__(self, db_connection):
+        super().__init__(
+            name="query_database",
+            description="执行 SQL 查询并返回结果，支持 SELECT 语句"
+        )
+        self.db = db_connection
+
+    def get_parameters(self) -> list:
+        # 参数定义自动转换为 Function Calling JSON Schema
+        return [
+            ToolParameter(
+                name="sql",
+                type="string",
+                description="要执行的 SELECT SQL 语句",
+                required=True
+            ),
+            ToolParameter(
+                name="limit",
+                type="integer",
+                description="返回最大行数",
+                required=False,
+                default=10
+            )
+        ]
+
+    def run(self, parameters: dict) -> ToolResponse:
+        sql = parameters.get("sql", "")
+        limit = parameters.get("limit", 10)
+
+        if not sql.strip().upper().startswith("SELECT"):
+            # 非 SELECT 语句，返回错误响应
+            return ToolResponse.error(
+                code="INVALID_SQL",
+                message="只允许 SELECT 查询，拒绝执行 DML 语句"
+            )
+
+        try:
+            results = self.db.execute(f"{sql} LIMIT {limit}")
+            return ToolResponse.success(
+                text=f"查询返回 {len(results)} 条记录",
+                data={"rows": results, "count": len(results)}
+            )
+        except Exception as e:
+            return ToolResponse.error(
+                code="QUERY_FAILED",
+                message=f"查询失败: {str(e)}"
+            )
+```
+
+### 注册并使用工具
+
+```python
+# 来源: hello_agents/tools/registry.py (ToolRegistry)
+from hello_agents.tools.registry import ToolRegistry
+
+registry = ToolRegistry()  # 自动创建默认熔断器
+
+# 注册工具
+registry.register_tool(DatabaseQueryTool(db_conn))
+
+# 工具列表（注入到 LLM 的 Function Calling Schema）
+print(registry.list_tools())  # ["query_database"]
+
+# 执行工具（自动走熔断器）
+response = registry.execute_tool(
+    "query_database",
+    '{"sql": "SELECT * FROM orders WHERE status = \'pending\'", "limit": 5}'
+)
+print(response.status)   # ToolStatus.SUCCESS
+print(response.text)     # "查询返回 5 条记录"
+print(response.data)     # {"rows": [...], "count": 5}
+```
+
+## 🏢 企业场景落地
+
+Java 后端微服务架构中，每个服务都有"健康检查"接口（`/actuator/health`）。将健康检查封装为 Agent 工具，就能让 Agent 自主排查服务状态，而无需工程师手动拼接 curl 命令。
+
+```python
+# 来源依赖: hello_agents/tools/base.py (Tool, ToolParameter)
+# 来源依赖: hello_agents/tools/response.py (ToolResponse)
+# 来源依赖: hello_agents/tools/registry.py (ToolRegistry)
+# 企业场景：微服务健康检查工具
+import urllib.request
+import json
+from hello_agents.tools.base import Tool, ToolParameter
+from hello_agents.tools.response import ToolResponse
+from hello_agents.tools.registry import ToolRegistry
+from hello_agents.agents.react_agent import ReActAgent
+from hello_agents.core.llm import HelloAgentsLLM
+
+
+class ServiceHealthTool(Tool):
+    """微服务健康检查工具——调用 Spring Boot Actuator /health 端点"""
+
+    def __init__(self, service_registry: dict):
+        super().__init__(
+            name="check_service_health",
+            description="检查指定微服务的健康状态，返回 UP/DOWN 及组件详情"
+        )
+        # 服务注册表：{service_name: base_url}
+        self.service_registry = service_registry
+
+    def get_parameters(self) -> list:
+        return [
+            ToolParameter(
+                name="service_name",
+                type="string",
+                description="微服务名称（如 order-service, payment-service）",
+                required=True
+            )
+        ]
+
+    def run(self, parameters: dict) -> ToolResponse:
+        service_name = parameters.get("service_name", "")
+        base_url = self.service_registry.get(service_name)
+
+        if not base_url:
+            return ToolResponse.error(
+                code="SERVICE_NOT_FOUND",
+                message=f"未知的服务名称: {service_name}，已知服务: {list(self.service_registry.keys())}"
+            )
+
+        try:
+            health_url = f"{base_url}/actuator/health"
+            with urllib.request.urlopen(health_url, timeout=5) as resp:
+                health_data = json.loads(resp.read().decode())
+                status = health_data.get("status", "UNKNOWN")
+
+                if status == "UP":
+                    return ToolResponse.success(
+                        text=f"{service_name} 状态正常（UP），所有组件健康",
+                        data={"service": service_name, "status": status, "details": health_data}
+                    )
+                else:
+                    # 服务不健康，返回 PARTIAL（有数据但有问题）
+                    return ToolResponse.partial(
+                        text=f"{service_name} 状态异常（{status}），请检查组件详情",
+                        data={"service": service_name, "status": status, "details": health_data}
+                    )
+
+        except Exception as e:
+            return ToolResponse.error(
+                code="HEALTH_CHECK_FAILED",
+                message=f"无法访问 {service_name} 的健康检查端点: {str(e)}"
+            )
+
+
+if __name__ == "__main__":
+    # 模拟微服务注册表
+    services = {
+        "order-service":   "http://localhost:8081",
+        "payment-service": "http://localhost:8082",
+        "user-service":    "http://localhost:8083",
+    }
+
+    llm = HelloAgentsLLM()
+    registry = ToolRegistry()
+    registry.register_tool(ServiceHealthTool(services))
+
+    agent = ReActAgent(
+        name="ops-agent",
+        llm=llm,
+        tool_registry=registry,
+        system_prompt="你是运维助手，收到问题后调用健康检查工具排查服务状态。",
+        max_steps=5
+    )
+
+    result = agent.run("order-service 响应变慢，请检查相关服务的健康状态")
+    print(result)
+```
+
+## ✅ 本章小结
+
+**本章依赖**：
+- 依赖第4章的 **ReAct 工具调用循环**：本章展示了工具系统的工程实现，第4章展示了工具被 LLM 调用的完整路径
+
+**后续应用**：
+- 本章的 **`ToolRegistry.execute_tool` 内置熔断器**，在第10章中被单独拆出来深入讲解 `CircuitBreaker` 的状态机设计
+- 本章的 **`ToolResponse.status`（ERROR/PARTIAL/SUCCESS）**是第10章熔断器判断失败的程序化依据
+- 本章的 **`ToolRegistry`** 作为核心组件，在第13章 API 网关实战和第15章多 Agent 实战中与 CircuitBreaker、TraceLogger 组合使用

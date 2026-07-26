@@ -1,0 +1,16 @@
+{
+    "name": "agent-learning-handbook",
+    "version": "1.0.0",
+    "description": "Agent 工程师成长手册 - 面向 Java 后端工程师",
+    "type": "module",
+    "scripts": {
+        "docs:dev": "vitepress dev docs",
+        "docs:build": "vitepress build docs",
+        "docs:preview": "vitepress preview docs"
+    },
+    "devDependencies": {
+        "vitepress": "^1.6.3",
+        "vitepress-plugin-mermaid": "^2.0.17",
+        "mermaid": "^11.4.1"
+    }
+}
