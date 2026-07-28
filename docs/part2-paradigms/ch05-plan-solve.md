@@ -35,7 +35,7 @@ description: 掌握任务分解与二阶段执行，构建能处理复杂任务�
 
 **适用场景**：任务结构清晰且步骤可预测的场景，如：代码审查、报告生成、数据处理管道、多步骤查询。
 
-**不适用场景**：需要根据中间结果动态调整策略的探索性任务——这时应该用 ReAct。
+**不适用场景：需要根据中间结果动态调整策略的探索性任务——这时应该用 ReAct。
 
 ### Planner：用 Function Calling 强制输出结构化计划
 
@@ -86,7 +86,7 @@ def plan(self, question: str, **kwargs) -> List[str]:
 
 ```python
 # 来源: hello_agents/agents/plan_solve_agent.py — Executor.execute 方法
-def execute(self, question: str, plan: List[str], **kwargs) -> str:
+def execute(self, question: str, plan: List[str], kwargs) -> str:
     """按计划执行任务，每步结果作为下一步的上下文"""
     history = []  # 记录已完成步骤的结果
 
@@ -101,7 +101,7 @@ def execute(self, question: str, plan: List[str], **kwargs) -> str:
 # 当前步骤: {step}
 请执行当前步骤并给出结果。"""
 
-        response_text = self._execute_step(context, **kwargs)
+        response_text = self._execute_step(context, kwargs)
         history.append({"step": step, "result": response_text})  # 累积上下文
 
     return history[-1]["result"]  # 最后一步的结果即为最终答案
@@ -246,10 +246,10 @@ if __name__ == "__main__":
 
 ## ✅ 本章小结
 
-**本章依赖**：
-- 依赖第3章的 **`invoke_with_tools` 接口**：`Planner` 使用 `tool_choice: "required"` 强制 LLM 输出结构化计划
-- 依赖第3章的 **`invoke` 同步接口**：`Executor` 在每个步骤中同步调用 LLM
+本章依赖**：
+- 依赖第3章的 `invoke_with_tools` 接口**：`Planner` 使用 `tool_choice: "required"` 强制 LLM 输出结构化计划
+- 依赖第3章的 `invoke` 同步接口：`Executor` 在每个步骤中同步调用 LLM
 
-**后续应用**：
+后续应用**：
 - 本章的 **Planner + Executor 分离架构**在第14章数据查询 Agent 中得到完整应用：Planner 生成 SQL 查询步骤，Executor 结合 SessionStore 实现多轮修正
 - 本章的**步骤历史累积上下文**思想在第8章上下文工程中被系统化：`ContextBuilder` 的 GSSC 流水线是这种上下文管理的工程化升级

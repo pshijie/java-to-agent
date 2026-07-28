@@ -17,7 +17,7 @@ description: 综合运用 ReAct + TaskTool + TraceLogger + CircuitBreaker，构�
 <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">第15章 多Agent系统</span>
 </div>
 
-本章是全局知识链的终点，综合运用手册中所有核心组件，构建一个完整的企业级多 Agent 系统：**监控 Agent** 发现异常 → **分析 Agent** 定位根因 → **处置 Agent** 执行修复，形成自动化的 AIOps 工作流。
+本章是全局知识链的终点，综合运用手册中所有核心组件，构建一个完整的企业级多 Agent 系统：**监控 Agent** 发现异常 → **分析 Agent** 定位根因 → **处置 Agent 执行修复，形成自动化的 AIOps 工作流。
 
 ## 🎯 本章你能学到什么
 
@@ -60,7 +60,7 @@ Orchestrator（协调者）
 
 ## 💻 代码实战
 
-下面的代码分为三个部分阅读：**① 专职工具定义**（每个 Sub-Agent 的能力）→ **② 多 Agent 系统工厂**（如何组装 Orchestrator + Sub-Agent）→ **③ 运行示例**（完整 AIOps 工作流）。
+下面的代码分为三个部分阅读：① 专职工具定义**（每个 Sub-Agent 的能力）→ **② 多 Agent 系统工厂**（如何组装 Orchestrator + Sub-Agent）→ **③ 运行示例（完整 AIOps 工作流）。
 
 ### ① 各专职 Sub-Agent 的工具
 
@@ -136,7 +136,7 @@ def add_database_index(table: str, column: str) -> str:
 
 ### ② 多 Agent 系统组装
 
-核心设计：每个 Sub-Agent 有**独立的 ToolRegistry**（权限隔离），Orchestrator 只持有 `TaskTool`（只能调度，不能直接操作）。
+核心设计：每个 Sub-Agent 有独立的 ToolRegistry（权限隔离），Orchestrator 只持有 `TaskTool`（只能调度，不能直接操作）。
 
 `agent_factory` 是一个工厂函数——根据 `agent_type` 参数返回不同专职的 Agent 实例（≈ Spring 的 `@Scope("prototype")` Bean）。
 
@@ -294,10 +294,10 @@ results = await asyncio.gather(
 
 ## ✅ 本章小结
 
-**本章依赖**：
-- 依赖第4章的 **ReAct 循环**：Orchestrator 和所有 Sub-Agent 均使用 `ReActAgent` 实现
+本章依赖**：
+- 依赖第4章的 **ReAct 循环：Orchestrator 和所有 Sub-Agent 均使用 `ReActAgent` 实现
 - 依赖第10章的 **CircuitBreaker**：每个 Sub-Agent 的工具注册表配置了独立的熔断器，防止处置操作失败时级联阻塞
 - 依赖第11章的 **TaskTool**：Orchestrator 通过 `TaskTool` 触发 Sub-Agent，实现上下文隔离
-- 依赖第12章的 **TraceLogger**：Orchestrator 层的 TraceLogger 记录跨 Agent 的协调链路
+- 依赖第12章的 TraceLogger**：Orchestrator 层的 TraceLogger 记录跨 Agent 的协调链路
 
 **全局知识链终点**：本章综合运用了 LLM 基础（第3章）→ ReAct 范式（第4章）→ 工具系统（第7章）→ 熔断器（第10章）→ 子代理（第11章）→ 可观测性（第12章）的完整链条，实现了一个具有生产级工程质量的多 Agent 自动化运维系统。

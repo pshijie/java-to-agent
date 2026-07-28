@@ -34,7 +34,7 @@ description: 掌握 LLM 消息协议、invoke/ainvoke 接口，为 Agent 开发�
 
 ### 消息协议：LLM 的"HTTP 请求格式"
 
-**结论**：与 LLM 交互的核心是一个消息列表（`List[Dict]`），每条消息有固定的 `role` 字段，LLM 根据消息历史推理出下一步输出。
+**结论：与 LLM 交互的核心是一个消息列表（`List[Dict]`），每条消息有固定的 `role` 字段，LLM 根据消息历史推理出下一步输出。
 
 OpenAI 消息协议定义了四种角色：
 
@@ -61,7 +61,7 @@ class HelloAgentsLLM:
         base_url: Optional[str] = None, # 默认从 LLM_BASE_URL 环境变量读取
         temperature: float = 0.7,       # 生成随机性，0=确定性，1=最大随机
         timeout: Optional[int] = None,  # 默认从 LLM_TIMEOUT 读取，默认 60 秒
-        **kwargs
+        kwargs
     ):
         # 创建适配器（自动检测 base_url 判断是 OpenAI/Anthropic/Gemini）
         self._adapter: BaseLLMAdapter = create_adapter(
@@ -79,20 +79,20 @@ class HelloAgentsLLM:
 
 ### 三个核心调用接口
 
-**`invoke`：同步调用，返回完整响应**
+`invoke`：同步调用，返回完整响应**
 
 ```python
 # 来源: hello_agents/core/llm.py
-def invoke(self, messages: List[Dict[str, str]], **kwargs) -> LLMResponse:
+def invoke(self, messages: List[Dict[str, str]], kwargs) -> LLMResponse:
     """非流式调用 LLM，返回完整响应对象。"""
     call_kwargs = {
         "temperature": kwargs.pop("temperature", self.temperature),
     }
-    return self._adapter.invoke(messages, **call_kwargs)
+    return self._adapter.invoke(messages, call_kwargs)
     # 返回 LLMResponse(content, model, usage, latency_ms, reasoning_content)
 ```
 
-**`ainvoke`：异步调用，在协程中使用**
+**`ainvoke`：异步调用，在协程中使用
 
 ```python
 # 来源: hello_agents/core/llm.py
@@ -101,7 +101,7 @@ async def ainvoke(self, messages: List[Dict[str, str]], **kwargs) -> LLMResponse
     loop = asyncio.get_event_loop()
     return await loop.run_in_executor(
         None,
-        lambda: self.invoke(messages, **kwargs)  # 将同步调用包装为异步
+        lambda: self.invoke(messages, kwargs)  # 将同步调用包装为异步
     )
 ```
 
@@ -124,10 +124,10 @@ public CompletableFuture<String> runAgent(String query) {
 }
 ```
 
-核心差异：Python 协程是**单线程协作式**调度，`await` 主动让出控制权；Java `CompletableFuture` 默认使用 `ForkJoinPool` **多线程并行**，`.thenApply()` 是回调，不是暂停。
+核心差异：Python 协程是**单线程协作式**调度，`await` 主动让出控制权；Java `CompletableFuture` 默认使用 `ForkJoinPool` 多线程并行，`.thenApply()` 是回调，不是暂停。
 :::
 
-**`invoke_with_tools`：Function Calling 接口**
+**`invoke_with_tools`：Function Calling 接口
 
 ```python
 # 来源: hello_agents/core/llm.py
@@ -143,7 +143,7 @@ def invoke_with_tools(
         "temperature": kwargs.pop("temperature", self.temperature),
         "tool_choice": tool_choice,
     }
-    return self._adapter.invoke_with_tools(messages, tools, **call_kwargs)
+    return self._adapter.invoke_with_tools(messages, tools, call_kwargs)
 ```
 
 ### 响应对象：`LLMResponse` 与 `LLMToolResponse`
@@ -336,11 +336,11 @@ if __name__ == "__main__":
 
 ## ✅ 本章小结
 
-**本章依赖**：
-- 依赖第2章的 **LLM Agent = LLM 大脑 + Function Calling 行动能力**：本章将这个结论具体落地为 `invoke_with_tools` 接口的使用方式
+本章依赖**：
+- 依赖第2章的 **LLM Agent = LLM 大脑 + Function Calling 行动能力：本章将这个结论具体落地为 `invoke_with_tools` 接口的使用方式
 
 **后续应用**：
-- 本章的 **`invoke_with_tools` 接口**在第4章 ReAct 中被用于驱动 Thought/Finish 工具调用循环，是 ReAct 范式的直接底层
-- 本章的 **`ainvoke` 异步接口**在第5章 Plan-Solve 的流式执行和第6章 Reflection 的迭代优化中被大量使用
+- 本章的 **`invoke_with_tools` 接口在第4章 ReAct 中被用于驱动 Thought/Finish 工具调用循环，是 ReAct 范式的直接底层
+- 本章的 `ainvoke` 异步接口**在第5章 Plan-Solve 的流式执行和第6章 Reflection 的迭代优化中被大量使用
 - 本章的 **消息协议（role: tool）**在第7章工具系统中得到完整实现：工具调用结果以 `tool` 角色消息的形式反馈给 LLM
-- 本章的 **`LLMResponse.latency_ms` 和 `usage`**在第12章可观测性中被 TraceLogger 采集，成为性能分析的原始数据
+- 本章的 `LLMResponse.latency_ms` 和 `usage`**在第12章可观测性中被 TraceLogger 采集，成为性能分析的原始数据

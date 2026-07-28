@@ -30,7 +30,7 @@ description: 理解熔断器状态机，用 CircuitBreaker 保护 Agent 工具�
 
 ### 为什么 Agent 需要熔断器
 
-**结论**：Agent 的工具调用是对外部服务的依赖。当外部服务不可用时，没有熔断器的 Agent 会不断重试失败的工具调用，消耗大量 API 调用配额（token 费用），最终在 `max_steps` 耗尽后无功而返。熔断器在检测到连续失败后，主动"断路"，避免这种资源浪费。
+**结论：Agent 的工具调用是对外部服务的依赖。当外部服务不可用时，没有熔断器的 Agent 会不断重试失败的工具调用，消耗大量 API 调用配额（token 费用），最终在 `max_steps` 耗尽后无功而返。熔断器在检测到连续失败后，主动"断路"，避免这种资源浪费。
 
 这在 Java 微服务中是一个经典场景：服务 A 依赖服务 B，服务 B 宕机后，没有熔断保护的服务 A 会把所有线程卡在等待 B 的响应上，最终导致服务 A 也宕机——即"雪崩效应"。Resilience4j 正是为此而生。
 
@@ -248,9 +248,9 @@ if __name__ == "__main__":
 ## ✅ 本章小结
 
 **本章依赖**：
-- 依赖第7章的 **`ToolRegistry.execute_tool`**：熔断器集成在 `execute_tool` 中，本章是对该集成点的深度拆解
-- 依赖第7章的 **`ToolResponse.status`（ERROR/PARTIAL/SUCCESS）**：熔断器通过判断 `status == ToolStatus.ERROR` 来决定是否增加失败计数
+- 依赖第7章的 **`ToolRegistry.execute_tool`：熔断器集成在 `execute_tool` 中，本章是对该集成点的深度拆解
+- 依赖第7章的 `ToolResponse.status`（ERROR/PARTIAL/SUCCESS）**：熔断器通过判断 `status == ToolStatus.ERROR` 来决定是否增加失败计数
 
-**后续应用**：
+后续应用**：
 - 本章的 **熔断器 + ToolRegistry 组合**在第13章 API 网关实战中用于保护多个后端服务的路由调用
-- 本章的 **`failure_threshold` 和 `recovery_timeout` 配置思想**在第15章多 Agent 实战中延伸：不同的子代理工具可以配置不同的熔断阈值，实现细粒度的弹性控制
+- 本章的 `failure_threshold` 和 `recovery_timeout` 配置思想在第15章多 Agent 实战中延伸：不同的子代理工具可以配置不同的熔断阈值，实现细粒度的弹性控制

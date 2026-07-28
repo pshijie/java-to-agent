@@ -40,9 +40,9 @@ description: 综合运用 ReAct + ToolRegistry + CircuitBreaker + TraceLogger，
 
 ### 企业场景背景
 
-**传统 API 网关（如 Spring Cloud Gateway）** 使用静态路由规则：`/api/orders/**` → `order-service`，规则在配置文件中硬编码。当业务规则复杂（如根据用户等级、请求负载、服务健康状态动态路由）时，规则维护成本急剧上升。
+**传统 API 网关（如 Spring Cloud Gateway） 使用静态路由规则：`/api/orders/**` → `order-service`，规则在配置文件中硬编码。当业务规则复杂（如根据用户等级、请求负载、服务健康状态动态路由）时，规则维护成本急剧上升。
 
-**LLM Agent 网关** 让 LLM 作为"路由决策大脑"，根据请求上下文动态决策：
+LLM Agent 网关 让 LLM 作为"路由决策大脑"，根据请求上下文动态决策：
 
 - 用户 VIP 等级高 → 路由到高性能服务实例
 - 下游服务出现熔断 → 自动切换到备用服务
@@ -179,7 +179,7 @@ class RouteDecisionTool(Tool):
 
 ### ② Agent 组装
 
-把工具、熔断器、TraceLogger、ReActAgent 连接在一起。注意初始化顺序：**熔断器 → 注册表 → 工具注册 → TraceLogger → Agent**，就像 Spring Boot 中 Bean 的依赖注入顺序。
+把工具、熔断器、TraceLogger、ReActAgent 连接在一起。注意初始化顺序：熔断器 → 注册表 → 工具注册 → TraceLogger → Agent，就像 Spring Boot 中 Bean 的依赖注入顺序。
 
 ```python
 # ─── Agent 工厂 ──────────────────────────────────────────────
@@ -266,9 +266,9 @@ if __name__ == "__main__":
 
 **本章依赖**：
 - 依赖第4章的 **ReAct 循环**：`ReActAgent` 驱动路由决策的推理流程
-- 依赖第7章的 **ToolRegistry**：统一管理三个路由工具，并内置熔断保护
-- 依赖第10章的 **CircuitBreaker**：`check_health` 工具如果连续返回 ERROR，自动熔断
-- 依赖第12章的 **TraceLogger**：记录每次路由决策的完整链路，支持生产问题回溯
+- 依赖第7章的 ToolRegistry**：统一管理三个路由工具，并内置熔断保护
+- 依赖第10章的 **CircuitBreaker：`check_health` 工具如果连续返回 ERROR，自动熔断
+- 依赖第12章的 TraceLogger**：记录每次路由决策的完整链路，支持生产问题回溯
 
 **后续应用**：
 - 本章的 **多工具组合模式**（发现→健康检查→决策执行）在第15章多 Agent 系统中扩展为多 Agent 协同：不同子代理负责不同的专项任务

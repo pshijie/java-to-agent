@@ -30,7 +30,7 @@ description: 使用 TraceLogger 追踪 Agent 执行链路，构建生产级可�
 
 ### 为什么 Agent 需要专门的可观测性
 
-**结论**：传统的日志（`logger.info`）对 Agent 不够用。Agent 的执行链路是**动态推理+工具调用的交织流**，需要记录：LLM 每步的推理意图（Thought）、工具调用的参数（Action）、工具返回的结果（Observation）、整体性能（token、延迟）。这些信息结合起来，才能在出问题时定位根因。
+**结论：传统的日志（`logger.info`）对 Agent 不够用。Agent 的执行链路是**动态推理+工具调用的交织流**，需要记录：LLM 每步的推理意图（Thought）、工具调用的参数（Action）、工具返回的结果（Observation）、整体性能（token、延迟）。这些信息结合起来，才能在出问题时定位根因。
 
 类比：Java 微服务用 SkyWalking 做链路追踪，记录每个服务调用的入参、出参、耗时。`TraceLogger` 是专为 Agent 设计的"链路追踪器"。
 
@@ -56,7 +56,7 @@ class TraceLogger:
 
 ::: tip ⚙️ 工程技巧：JSONL ≈ Kafka Topic 的日志格式
 
-JSONL（JSON Lines）每行一个独立 JSON 对象，非常适合**流式追加**（不需要打开整个文件重写）和**批量分析**（可以用 `jq` 过滤特定事件，或直接用 Python `for line in file` 逐行处理）。这与 Kafka 消息格式、ELK Stack 的 Logstash 输入格式完全兼容——生产环境可以直接把 JSONL 文件发送到 Filebeat → Logstash → Elasticsearch 链路。
+JSONL（JSON Lines）每行一个独立 JSON 对象，非常适合流式追加**（不需要打开整个文件重写）和**批量分析（可以用 `jq` 过滤特定事件，或直接用 Python `for line in file` 逐行处理）。这与 Kafka 消息格式、ELK Stack 的 Logstash 输入格式完全兼容——生产环境可以直接把 JSONL 文件发送到 Filebeat → Logstash → Elasticsearch 链路。
 :::
 
 ### 核心事件类型
@@ -99,9 +99,9 @@ def log_event(self, event: str, payload: Dict[str, Any], step: Optional[int] = N
 def _sanitize_value(self, value) -> Any:
     """递归脱敏敏感信息"""
     if isinstance(value, str):
-        value = re.sub(r'sk-[a-zA-Z0-9]+', 'sk-***', value)           # API Key 脱敏
+        value = re.sub(r'sk-[a-zA-Z0-9]+', 'sk-*', value)           # API Key 脱敏
         value = re.sub(r'Bearer\s+[a-zA-Z0-9_\-]+', 'Bearer ***', value)  # Bearer Token
-        value = re.sub(r'(/Users/|/home/|C:\\Users\\)[^/\\]+', r'\1***', value)  # 用户路径
+        value = re.sub(r'(/Users/|/home/|C:\\Users\\)[^/\\]+', r'\1*', value)  # 用户路径
         return value
     elif isinstance(value, dict):
         return {k: self._sanitize_value(v) for k, v in value.items()}  # 递归处理
@@ -255,10 +255,10 @@ sample.stop(registry.timer("db.query", "table", "orders"));
 
 ## ✅ 本章小结
 
-**本章依赖**：
-- 依赖第7章的 **工具调用机制**：`TraceLogger` 记录的 `tool_call` 和 `tool_result` 事件，正是第7章 `ToolRegistry.execute_tool` 流程的结构化日志
+本章依赖**：
+- 依赖第7章的 **工具调用机制：`TraceLogger` 记录的 `tool_call` 和 `tool_result` 事件，正是第7章 `ToolRegistry.execute_tool` 流程的结构化日志
 - 依赖第10章的 **熔断器**：熔断器触发的 `CIRCUIT_OPEN` 错误会以 `error` 事件形式出现在 JSONL 日志中，帮助排查哪个工具频繁失败
 
-**后续应用**：
-- 本章的 **`TraceLogger`** 在第13–15章所有企业实战章节中作为基础设施组件使用，确保每次 Agent 执行都留有可审计的链路记录
+后续应用**：
+- 本章的 `TraceLogger` 在第13–15章所有企业实战章节中作为基础设施组件使用，确保每次 Agent 执行都留有可审计的链路记录
 - 本章的 **JSONL 输出格式**可直接接入 ELK Stack（Elasticsearch + Logstash + Kibana），为生产级 Agent 监控平台提供数据来源

@@ -33,7 +33,7 @@ description: 理解自评估循环与质量控制，构建能自我纠错的 Ref
 
 这个模式在软件工程中并不陌生：Code Review、持续集成（CI）、单元测试都是"生成 → 验证 → 修复"的循环。Reflection Agent 将这个循环内化到 AI 系统本身。
 
-**适用场景**：输出质量难以用规则验证，但 LLM 自身能感知质量差异的任务——代码生成、文档写作、SQL 优化、翻译质量检查。
+**适用场景：输出质量难以用规则验证，但 LLM 自身能感知质量差异的任务——代码生成、文档写作、SQL 优化、翻译质量检查。
 
 ### Memory 模块：追踪执行与反思轨迹
 
@@ -68,7 +68,7 @@ class Memory:
 
 ::: tip ⚙️ 工程技巧：Memory vs 会话历史（session history）
 
-`Memory` 模块只在**单次任务执行**期间存在，任务完成后重置（`self.memory = Memory()`）。它记录的是"这次任务经历了哪些迭代"，属于**工作内存（Working Memory）**。
+`Memory` 模块只在**单次任务执行**期间存在，任务完成后重置（`self.memory = Memory()`）。它记录的是"这次任务经历了哪些迭代"，属于工作内存（Working Memory）。
 
 第9章的 `SessionStore` 记录的是**跨轮次的对话历史**，任务之间持续存在。两者类比 Java 中的 `ThreadLocal`（请求级别，请求完成即销毁）vs Redis Session（跨请求持久化）。
 :::
@@ -77,7 +77,7 @@ class Memory:
 
 ```python
 # 来源: hello_agents/agents/reflection_agent.py — ReflectionAgent.run 方法
-def run(self, input_text: str, **kwargs) -> str:
+def run(self, input_text: str, kwargs) -> str:
     """Reflection Agent 主循环：初始执行 → 反思 → 优化"""
     self.memory = Memory()  # 每次任务重置工作记忆
 
@@ -99,7 +99,7 @@ def run(self, input_text: str, **kwargs) -> str:
             break  # 提前终止，不再浪费 LLM 调用
 
         # 2c. 优化：LLM 根据反馈改进结果
-        refined_result = self._refine_result(input_text, last_result, feedback, **kwargs)
+        refined_result = self._refine_result(input_text, last_result, feedback, kwargs)
         self.memory.add_record("execution", refined_result)  # 记录新版本
 
     return self.memory.get_last_execution()  # 返回最后一次执行结果
@@ -109,7 +109,7 @@ def run(self, input_text: str, **kwargs) -> str:
 
 ```python
 # 来源: hello_agents/agents/reflection_agent.py — _reflect_on_result 方法
-def _reflect_on_result(self, task: str, result: str, **kwargs) -> str:
+def _reflect_on_result(self, task: str, result: str, kwargs) -> str:
     """对结果进行反思：LLM 切换为"批判性评审者"角色"""
     messages = [
         {"role": "system", "content": self.system_prompt},
@@ -121,7 +121,7 @@ def _reflect_on_result(self, task: str, result: str, **kwargs) -> str:
 请分析这个回答的质量，指出不足之处，并提出具体的改进建议。
 如果回答已经很好，请回答"无需改进"。"""}
     ]
-    return self._get_llm_response(messages, **kwargs)
+    return self._get_llm_response(messages, kwargs)
     # 关键：同一个 LLM，通过不同的 Prompt 切换"生成者"和"评审者"角色
 ```
 
@@ -230,11 +230,11 @@ if __name__ == "__main__":
 
 ## ✅ 本章小结
 
-**本章依赖**：
-- 依赖第3章的 **`invoke` 同步接口**：`_execute_task`、`_reflect_on_result`、`_refine_result` 三个阶段都通过 `invoke` 同步调用 LLM
-- 依赖第1章的**感知-决策-执行循环**：Reflection 本质上是在执行循环外套了一层"质量验证循环"
+本章依赖**：
+- 依赖第3章的 `invoke` 同步接口**：`_execute_task`、`_reflect_on_result`、`_refine_result` 三个阶段都通过 `invoke` 同步调用 LLM
+- 依赖第1章的感知-决策-执行循环**：Reflection 本质上是在执行循环外套了一层"质量验证循环"
 
 **后续应用**：
-- 本章的 **Memory 模块**（工作记忆 vs 持久会话）思想在第9章 SessionStore 中得到工程化：`SessionStore` 提供跨轮次的持久化能力，而 `Memory` 只在单次任务生命周期内存活
-- 本章的 **`max_iterations` 防无限循环**设计思想在第10章熔断器中得到升级：CircuitBreaker 从"次数限制"演化为"失败率驱动的动态熔断"
+- 本章的 **Memory 模块（工作记忆 vs 持久会话）思想在第9章 SessionStore 中得到工程化：`SessionStore` 提供跨轮次的持久化能力，而 `Memory` 只在单次任务生命周期内存活
+- 本章的 **`max_iterations` 防无限循环设计思想在第10章熔断器中得到升级：CircuitBreaker 从"次数限制"演化为"失败率驱动的动态熔断"
 - 本章的 **Reflection 范式**在第13–15章企业实战中可选择性地叠加在 ReAct 或 Plan-Solve 之上，形成"生成 → 验证 → 修正"的高质量输出管道

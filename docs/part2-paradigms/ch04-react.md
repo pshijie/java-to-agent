@@ -37,7 +37,7 @@ ReAct 的核心贡献是将"推理"和"行动"交织在一起，而不是先规�
 
 ### HelloAgents 的 ReAct 实现：Function Calling
 
-**结论**：`ReActAgent` 不用正则表达式解析 LLM 输出的文本，而是通过 OpenAI Function Calling 以结构化 JSON 接收 Thought 和 Action，可靠性从约 70% 提升到 99%+。
+**结论：`ReActAgent` 不用正则表达式解析 LLM 输出的文本，而是通过 OpenAI Function Calling 以结构化 JSON 接收 Thought 和 Action，可靠性从约 70% 提升到 99%+。
 
 ::: tip ⚙️ 工程技巧：为什么不用正则解析？
 
@@ -193,7 +193,7 @@ public String searchAlerts(String keyword) {
 // AOP 切面在方法调用时自动将该方法注册到 ToolRegistry
 ```
 
-核心差异：Python decorator 在**模块加载时**立即执行包裹逻辑；Java `@Annotation + AOP` 在**运行时**由代理对象拦截方法调用。Python 是编译期行为，Java AOP 是运行期代理。
+核心差异：Python decorator 在**模块加载时**立即执行包裹逻辑；Java `@Annotation + AOP` 在运行时由代理对象拦截方法调用。Python 是编译期行为，Java AOP 是运行期代理。
 :::
 
 ## 🏢 企业场景落地
@@ -266,10 +266,10 @@ if __name__ == "__main__":
 ## ✅ 本章小结
 
 **本章依赖**：
-- 依赖第3章的 **`invoke_with_tools` 接口**：ReAct 的 Thought/Action 循环完全依赖 Function Calling 机制，`invoke_with_tools` 是驱动整个循环的引擎
-- 依赖第3章的**消息协议（role: tool）**：Observation 结果以 `tool` 角色消息追加到历史，这是 ReAct 循环能保持上下文的关键
+- 依赖第3章的 **`invoke_with_tools` 接口：ReAct 的 Thought/Action 循环完全依赖 Function Calling 机制，`invoke_with_tools` 是驱动整个循环的引擎
+- 依赖第3章的**消息协议（role: tool）：Observation 结果以 `tool` 角色消息追加到历史，这是 ReAct 循环能保持上下文的关键
 
 **后续应用**：
 - 本章的 **ReAct 循环结构**（while + invoke_with_tools + 工具执行）是第7章工具系统的直接使用者，理解 ReAct 后才能理解为什么需要 ToolRegistry 和 CircuitBreaker
-- 本章的 **`max_steps` 限制**思想在第10章熔断器中得到工程化升级：不只是步数限制，而是基于失败率的动态熔断
-- 本章的 **`ReActAgent`** 在第13章 API 网关实战中与 ToolRegistry、CircuitBreaker、TraceLogger 组合，构建完整的企业级 Agent
+- 本章的 **`max_steps` 限制思想在第10章熔断器中得到工程化升级：不只是步数限制，而是基于失败率的动态熔断
+- 本章的 `ReActAgent` 在第13章 API 网关实战中与 ToolRegistry、CircuitBreaker、TraceLogger 组合，构建完整的企业级 Agent

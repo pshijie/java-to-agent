@@ -38,7 +38,7 @@ description: 掌握 TaskTool 子代理任务分发，实现 Agent 的并行执�
 |---------|---------|----------------|
 | **执行模式** | 单次函数调用 | 完整的 Agent 循环（多步推理） |
 | **上下文** | 共享主 Agent 上下文 | 独立隔离的上下文 |
-| **返回值** | 完整的工具输出 | 摘要（`return_summary=True`） |
+| **返回值 | 完整的工具输出 | 摘要（`return_summary=True`） |
 | **适用场景** | 简单的信息查询 | 复杂的子任务（需要多步决策） |
 
 ### `TaskTool`：子代理调度工具
@@ -75,7 +75,7 @@ class TaskTool(Tool):
 
 ::: tip ⚙️ 工程技巧：`agent_factory` ≈ Spring 的 `PrototypeBean`
 
-`agent_factory` 是一个工厂函数，每次调用返回**新的 Agent 实例**（独立上下文）。这等价于 Spring 中的 `@Scope("prototype")` Bean——每次 `getBean()` 都返回全新实例，而不是共享的 Singleton。如果子代理复用主 Agent 的实例，子任务的历史会污染主 Agent 的上下文，造成"上下文泄漏"。工厂模式天然解决了这个问题。
+`agent_factory` 是一个工厂函数，每次调用返回新的 Agent 实例（独立上下文）。这等价于 Spring 中的 `@Scope("prototype")` Bean——每次 `getBean()` 都返回全新实例，而不是共享的 Singleton。如果子代理复用主 Agent 的实例，子任务的历史会污染主 Agent 的上下文，造成"上下文泄漏"。工厂模式天然解决了这个问题。
 :::
 
 ### 工具过滤器：安全隔离
@@ -281,9 +281,9 @@ pool.shutdown();
 
 ## ✅ 本章小结
 
-**本章依赖**：
-- 依赖第7章的 **`Tool` 基类和 `ToolRegistry`**：`TaskTool` 本身就是一个 `Tool`，注册到主 Agent 的 `ToolRegistry` 中
-- 依赖第4章的 **`ReActAgent`**：子代理的默认类型就是 `ReActAgent`，子代理的执行流程与第4章完全相同
+本章依赖**：
+- 依赖第7章的 `Tool` 基类和 `ToolRegistry`**：`TaskTool` 本身就是一个 `Tool`，注册到主 Agent 的 `ToolRegistry` 中
+- 依赖第4章的 `ReActAgent`：子代理的默认类型就是 `ReActAgent`，子代理的执行流程与第4章完全相同
 
 **后续应用**：
-- 本章的 **`TaskTool` + `agent_factory` 模式**在第15章多 Agent 监控系统中得到完整应用：多个专职子代理（监控、分析、处置）由主 Orchestrator 通过 `TaskTool` 调度
+- 本章的 **`TaskTool` + `agent_factory` 模式在第15章多 Agent 监控系统中得到完整应用：多个专职子代理（监控、分析、处置）由主 Orchestrator 通过 `TaskTool` 调度

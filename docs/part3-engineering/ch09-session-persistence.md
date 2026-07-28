@@ -30,7 +30,7 @@ description: 掌握 SessionStore 原子写入与会话管理，实现多轮对�
 
 ### 为什么需要会话持久化
 
-**结论**：Agent 处理长任务时（如：分析大型代码库、多步数据处理），任务可能运行数分钟甚至更长。如果中途崩溃，没有持久化就意味着从零重来，浪费大量 API 调用成本。`SessionStore` 将"对话快照"写入磁盘，支持断点续传。
+**结论：Agent 处理长任务时（如：分析大型代码库、多步数据处理），任务可能运行数分钟甚至更长。如果中途崩溃，没有持久化就意味着从零重来，浪费大量 API 调用成本。`SessionStore` 将"对话快照"写入磁盘，支持断点续传。
 
 在 Java 后端系统中，这个问题早就有成熟解决方案：HTTP Session 存入 Redis（Spring Session），任何服务实例都能恢复用户状态。`SessionStore` 是单机场景下的等价实现，用本地 JSON 文件替代 Redis。
 
@@ -132,7 +132,7 @@ public class ChatController {
 }
 ```
 
-核心差异：Spring Session 是**分布式**（多实例共享 Redis），SessionStore 是**单机本地文件**。生产级 Agent 平台应替换为 Redis/数据库存储，接口设计可直接复用 `SessionStore` 的方法签名。
+核心差异：Spring Session 是分布式**（多实例共享 Redis），SessionStore 是**单机本地文件。生产级 Agent 平台应替换为 Redis/数据库存储，接口设计可直接复用 `SessionStore` 的方法签名。
 :::
 
 ### 会话列表管理
@@ -290,9 +290,9 @@ if __name__ == "__main__":
 
 ## ✅ 本章小结
 
-**本章依赖**：
-- 依赖第8章的 **`ContextBuilder`**：会话恢复后，完整的历史消息列表通过 `ContextBuilder.build()` 重建上下文，再注入 LLM
+本章依赖**：
+- 依赖第8章的 `ContextBuilder`**：会话恢复后，完整的历史消息列表通过 `ContextBuilder.build()` 重建上下文，再注入 LLM
 
-**后续应用**：
-- 本章的 **`SessionStore` 原子写入**思想在第10章熔断器的失败计数设计中体现：`defaultdict` 的状态同样需要在 Agent 重启后恢复（通过 SessionStore 持久化熔断器状态）
-- 本章的 **会话恢复 + 一致性检查机制**在第14章数据查询 Agent 中直接应用：多轮 SQL 修正对话依赖 SessionStore 保持查询上下文
+后续应用**：
+- 本章的 `SessionStore` 原子写入**思想在第10章熔断器的失败计数设计中体现：`defaultdict` 的状态同样需要在 Agent 重启后恢复（通过 SessionStore 持久化熔断器状态）
+- 本章的 会话恢复 + 一致性检查机制**在第14章数据查询 Agent 中直接应用：多轮 SQL 修正对话依赖 SessionStore 保持查询上下文
