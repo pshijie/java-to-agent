@@ -156,6 +156,10 @@ async def llm_agent_decision(metrics: dict) -> str:
 
 ## 🏢 企业场景落地
 
+::: warning 📌 本章为概念对比章节
+本章企业场景使用 Java 代码帮助建立 Agent 与规则引擎的类比。从第 3 章起，所有代码均使用 Python + HelloAgents 框架。
+:::
+
 在 Java 后端系统中，Drools 规则引擎被广泛用于风控、促销规则、告警策略等场景。其核心挑战是：业务规则膨胀后，`.drl` 文件难以维护，且无法处理规则之外的异常。
 
 下面的示例展示了两种架构的对比，说明在什么情况下 LLM Agent 可以作为规则引擎的补充或替代：

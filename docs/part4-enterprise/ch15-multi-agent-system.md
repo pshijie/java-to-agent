@@ -28,6 +28,17 @@ description: 综合运用 ReAct + TaskTool + TraceLogger + CircuitBreaker，构�
 
 ## 📖 核心概念
 
+::: tip 🧩 本章用到的组件速览（如你跳章阅读，先看这里）
+
+| 组件 | 一句话说明 | 详细章节 |
+|------|-----------|---------|
+| **ReActAgent** | 推理-行动循环：LLM 决策 → 执行工具 → 观察结果 → 继续/完成 | [第4章](/part2-paradigms/ch04-react) |
+| **TaskTool** | 启动独立子代理执行子任务，上下文隔离，只返回摘要给主 Agent | [第11章](/part3-engineering/ch11-sub-agent) |
+| **CircuitBreaker** | 工具连续失败后自动断路，防止雪崩（≈ Resilience4j） | [第10章](/part3-engineering/ch10-circuit-breaker) |
+| **TraceLogger** | 记录完整执行链路为 JSONL+HTML，支持跨 Agent 追踪 | [第12章](/part3-engineering/ch12-observability) |
+| **ToolRegistry** | 工具注册中心，每个 Sub-Agent 有独立的 ToolRegistry | [第7章](/part3-engineering/ch07-tool-system) |
+:::
+
 ### 多 Agent 系统架构设计
 
 **核心原则**：单一职责——每个 Agent 只负责一类任务，通过 Orchestrator 协调。
@@ -48,6 +59,12 @@ Orchestrator（协调者）
 这等价于微服务架构中 API Gateway 不直接执行业务逻辑，而是调用各微服务——关注点分离。
 
 ## 💻 代码实战
+
+下面的代码分为三个部分阅读：**① 专职工具定义**（每个 Sub-Agent 的能力）→ **② 多 Agent 系统工厂**（如何组装 Orchestrator + Sub-Agent）→ **③ 运行示例**（完整 AIOps 工作流）。
+
+### ① 各专职 Sub-Agent 的工具
+
+监控 Agent、分析 Agent、处置 Agent 各有自己的工具集，互相独立（最小权限原则）。
 
 ```python
 # 来源: hello_agents/agents/react_agent.py (ReActAgent)
@@ -114,6 +131,16 @@ def add_database_index(table: str, column: str) -> str:
     return f"✅ 已提交索引创建任务：ALTER TABLE {table} ADD INDEX idx_{column} ({column})，预计 3 分钟完成"
 
 
+# ─── 多 Agent 系统工厂 ────────────────────────────────────────
+```
+
+### ② 多 Agent 系统组装
+
+核心设计：每个 Sub-Agent 有**独立的 ToolRegistry**（权限隔离），Orchestrator 只持有 `TaskTool`（只能调度，不能直接操作）。
+
+`agent_factory` 是一个工厂函数——根据 `agent_type` 参数返回不同专职的 Agent 实例（≈ Spring 的 `@Scope("prototype")` Bean）。
+
+```python
 # ─── 多 Agent 系统工厂 ────────────────────────────────────────
 
 def create_multi_agent_system():

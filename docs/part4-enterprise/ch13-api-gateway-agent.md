@@ -28,6 +28,16 @@ description: 综合运用 ReAct + ToolRegistry + CircuitBreaker + TraceLogger，
 
 ## 📖 核心概念
 
+::: tip 🧩 本章用到的组件速览（如你跳章阅读，先看这里）
+
+| 组件 | 一句话说明 | 详细章节 |
+|------|-----------|---------|
+| **ReActAgent** | 推理-行动循环：LLM 决策调哪个工具 → 执行 → 观察结果 → 继续 | [第4章](/part2-paradigms/ch04-react) |
+| **ToolRegistry** | 工具的注册中心，管理所有可调用工具并内置熔断保护 | [第7章](/part3-engineering/ch07-tool-system) |
+| **CircuitBreaker** | 工具连续失败 N 次后自动断路，防止雪崩（≈ Resilience4j） | [第10章](/part3-engineering/ch10-circuit-breaker) |
+| **TraceLogger** | 记录 Agent 每步操作为 JSONL+HTML，用于事后审计和调试 | [第12章](/part3-engineering/ch12-observability) |
+:::
+
 ### 企业场景背景
 
 **传统 API 网关（如 Spring Cloud Gateway）** 使用静态路由规则：`/api/orders/**` → `order-service`，规则在配置文件中硬编码。当业务规则复杂（如根据用户等级、请求负载、服务健康状态动态路由）时，规则维护成本急剧上升。
@@ -48,6 +58,12 @@ description: 综合运用 ReAct + ToolRegistry + CircuitBreaker + TraceLogger，
 | `TraceLogger` | 记录每次路由决策的完整链路，支持审计和回溯 |
 
 ## 💻 代码实战
+
+下面的代码分为三个部分阅读：**① 工具定义**（Agent 能做什么）→ **② Agent 组装**（如何把组件连接起来）→ **③ 运行示例**（实际执行效果）。
+
+### ① 路由工具定义
+
+每个工具是一个独立的"能力单元"，Agent 根据需要调用。这里定义了三个：服务发现、健康检查、路由执行。
 
 ```python
 # 来源: hello_agents/agents/react_agent.py (ReActAgent)
@@ -158,6 +174,14 @@ class RouteDecisionTool(Tool):
         )
 
 
+# ─── Agent 工厂 ──────────────────────────────────────────────
+```
+
+### ② Agent 组装
+
+把工具、熔断器、TraceLogger、ReActAgent 连接在一起。注意初始化顺序：**熔断器 → 注册表 → 工具注册 → TraceLogger → Agent**，就像 Spring Boot 中 Bean 的依赖注入顺序。
+
+```python
 # ─── Agent 工厂 ──────────────────────────────────────────────
 
 def create_api_gateway_agent() -> tuple:

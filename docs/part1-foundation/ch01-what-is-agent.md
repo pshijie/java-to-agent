@@ -66,6 +66,25 @@ description: 理解 Agent 的本质、感知-决策-执行循环，以及与传�
 
 ## 💻 代码实战
 
+### ⚡ 3 行代码体验 Agent（预览）
+
+下面是一个你在学完第4章后就能运行的 ReAct Agent，先看看效果，建立直觉：
+
+```python
+# 来源: hello_agents/agents/react_agent.py (ReActAgent) — 第4章详细展开
+from hello_agents.agents.react_agent import ReActAgent
+from hello_agents.core.llm import HelloAgentsLLM
+
+agent = ReActAgent(name="demo", llm=HelloAgentsLLM(), max_steps=5)
+result = agent.run("北京今天天气怎么样？")
+# Agent 会自动：Thought（我需要查天气）→ Action（调用天气工具）→ Observation（返回结果）→ Finish
+print(result)
+```
+
+这 3 行代码背后发生了什么？就是下面的感知-决策-执行循环。第4章会完整拆解 `ReActAgent` 的源码实现。
+
+### Agent 循环结构（概念示意）
+
 本章为概念章节，以下伪代码用于说明 Agent 循环结构的基本形态。**注意：以下为概念示意，非 HelloAgents 实际代码**，后续章节（第4章 ReAct、第5章 Plan-Solve）将展示来自真实源码的完整实现。
 
 ```python
@@ -91,6 +110,10 @@ class ConceptualAgent:
 这个结构中，`decide()` 是唯一依赖 LLM 的环节，其余部分是纯粹的工程代码。理解这一点有助于后续章节分析每种 Agent 范式的差异：ReAct、Plan-Solve、Reflection 本质上都是在这个骨架上，对"决策"环节施加不同的约束和增强。
 
 ## 🏢 企业场景落地
+
+::: warning 📌 本章为概念对比章节
+本章企业场景使用 Java 代码帮助建立 Agent 与 Spring 生态的联系。从第 3 章起，所有代码均使用 Python + HelloAgents 框架。
+:::
 
 Java Spring AI 提供了与 Agent 思想高度对应的接口抽象。`ChatClient` 扮演"大脑"角色，负责与 LLM 通信；`Advisor` 机制类似 AOP，可以在请求前后注入工具调用、上下文管理等能力，整体结构与感知-决策-执行循环一一对应。
 

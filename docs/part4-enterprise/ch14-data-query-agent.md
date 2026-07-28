@@ -41,20 +41,41 @@ description: 综合运用 PlanSolve + ContextBuilder + SessionStore，构建自�
 
 ### ContextBuilder 的 Schema 注入策略
 
+::: tip 💡 快速理解 ContextBuilder（详见[第8章 上下文工程](/part3-engineering/ch08-context-engineering)）
+
+LLM 的"记忆力"有上限（token 窗口），当对话轮次增多后，早期的信息会被挤掉。`ContextBuilder` 是一个**智能信息筛选器**：它从所有可用信息（对话历史、工具结果、知识库文档）中，挑选出**与当前问题最相关的部分**塞进 Prompt，保证 LLM 每次都能看到最有价值的上下文。
+
+类比 Java：相当于 Hibernate 的懒加载 + 分页查询——不是把数据库全部 load 进内存，而是按需加载最相关的部分。
+
+核心概念：
+- **`ContextPacket`**：一个信息包，包含内容本身 + 相关性评分 + token 消耗量
+- **`relevance_score`**：0.0–1.0，表示这段信息对当前问题的相关程度，评分越高越优先保留
+- **`builder.build()`**：执行 4 步流水线（收集 → 评分筛选 → 结构化 → 压缩），最终输出一段经过精选的 Prompt 文本
+:::
+
+在数据查询场景中，数据库 Schema（表结构）对 SQL 生成**至关重要**——没有 Schema，LLM 不知道有哪些表、哪些字段可用。因此我们将 Schema 以 `relevance_score=1.0`（最高分）注入，确保它**永远不会被筛选器丢弃**，不管对话历史多长。
+
 ```python
 # 来源: hello_agents/context/builder.py (ContextBuilder, ContextPacket)
-# Schema 以最高相关性（1.0）注入，确保不被 Select 阶段过滤
+# 将 Schema 包装为 ContextPacket，设最高相关性
 schema_packet = ContextPacket(
-    content=f"数据库 Schema：\n{db_schema}",
-    metadata={"type": "knowledge_base"},
-    relevance_score=1.0,  # 强制保留，不参与相关性竞争
+    content=f"数据库 Schema：\n{db_schema}",  # 完整的建表语句
+    metadata={"type": "knowledge_base"},       # 标记为"知识库"类型
+    relevance_score=1.0,  # 1.0 = 最高优先级，绝不被过滤（对比：普通历史消息约 0.3–0.7）
 )
+
+# builder.build() 会自动完成以下工作：
+# 1. Gather: 收集 schema_packet + 对话历史 + 系统指令
+# 2. Select: 按 relevance_score 从高到低排序，在 token 预算内尽量多保留
+# 3. Structure: 按 [系统指令] [任务] [证据] [历史] 的模板组织
+# 4. Compress: 如果还超出预算，截断低分部分
 context = builder.build(
-    user_query=query,
-    conversation_history=history,
-    system_instructions=system_prompt,
-    additional_packets=[schema_packet]  # Schema 作为附加高优先级包
+    user_query=query,                         # 用户的自然语言查询
+    conversation_history=history,             # 之前的对话记录（自动计算相关性）
+    system_instructions=system_prompt,        # "你是 MySQL 专家"等角色指令
+    additional_packets=[schema_packet]        # Schema 作为额外高优先级包注入
 )
+# context 是最终的 Prompt 字符串，直接传给 LLM
 ```
 
 ## 💻 代码实战
