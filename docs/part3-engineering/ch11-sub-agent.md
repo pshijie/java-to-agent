@@ -281,9 +281,9 @@ pool.shutdown();
 
 ## ✅ 本章小结
 
-本章依赖**：
-- 依赖第7章的 `Tool` 基类和 `ToolRegistry`**：`TaskTool` 本身就是一个 `Tool`，注册到主 Agent 的 `ToolRegistry` 中
+**本章依赖**：
+- 依赖第7章的 `Tool` 基类和 `ToolRegistry`：`TaskTool` 本身就是一个 `Tool`，注册到主 Agent 的 `ToolRegistry` 中
 - 依赖第4章的 `ReActAgent`：子代理的默认类型就是 `ReActAgent`，子代理的执行流程与第4章完全相同
 
 **后续应用**：
-- 本章的 **`TaskTool` + `agent_factory` 模式在第15章多 Agent 监控系统中得到完整应用：多个专职子代理（监控、分析、处置）由主 Orchestrator 通过 `TaskTool` 调度
+- 本章的 `TaskTool` + `agent_factory` 模式在第15章多 Agent 监控系统中得到完整应用：多个专职子代理（监控、分析、处置）由主 Orchestrator 通过 `TaskTool` 调度

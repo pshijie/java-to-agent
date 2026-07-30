@@ -30,7 +30,7 @@ description: 掌握 HelloAgents 工具系统架构：Tool 基类、ToolRegistry�
 
 ### `Tool` 基类：抽象工具契约
 
-**结论：`Tool` 是所有工具的抽象基类，定义了两个必须实现的抽象方法：`run(parameters)` 执行工具，`get_parameters()` 描述参数结构。
+**结论**：`Tool` 是所有工具的抽象基类，定义了两个必须实现的抽象方法：`run(parameters)` 执行工具，`get_parameters()` 描述参数结构。
 
 ```python
 # 来源: hello_agents/tools/base.py — Tool 基类核心接口
@@ -202,7 +202,7 @@ public List<Record> search(
 // Spring 自动解析 HTTP query string → 方法参数，原理相同
 ```
 
-两者都是"从方法签名反射出参数列表"——Python 用 `inspect.signature()`，Java 用 `java.lang.reflect.Parameter`。核心思想：**约定优于配置**，方法签名本身就是 Schema，不需要额外写配置文件。
+两者都是"从方法签名反射出参数列表"——Python 用 `inspect.signature()`，Java 用 `java.lang.reflect.Parameter`。核心思想：**约定优于配置，方法签名本身就是 Schema，不需要额外写配置文件。
 :::
 
 **完整流程图示**
@@ -476,10 +476,10 @@ if __name__ == "__main__":
 
 ## ✅ 本章小结
 
-本章依赖**：
+**本章依赖**：
 - 依赖第4章的 **ReAct 工具调用循环**：本章展示了工具系统的工程实现，第4章展示了工具被 LLM 调用的完整路径
 
 **后续应用**：
-- 本章的 `ToolRegistry.execute_tool` 内置熔断器**，在第10章中被单独拆出来深入讲解 `CircuitBreaker` 的状态机设计
-- 本章的 `ToolResponse.status`（ERROR/PARTIAL/SUCCESS）**是第10章熔断器判断失败的程序化依据
+- 本章的 `ToolRegistry.execute_tool` 内置熔断器，在第10章中被单独拆出来深入讲解 `CircuitBreaker` 的状态机设计
+- 本章的 `ToolResponse.status`（ERROR/PARTIAL/SUCCESS）是第10章熔断器判断失败的程序化依据
 - 本章的 `ToolRegistry` 作为核心组件，在第13章 API 网关实战和第15章多 Agent 实战中与 CircuitBreaker、TraceLogger 组合使用

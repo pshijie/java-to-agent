@@ -33,7 +33,7 @@ description: 理解自评估循环与质量控制，构建能自我纠错的 Ref
 
 这个模式在软件工程中并不陌生：Code Review、持续集成（CI）、单元测试都是"生成 → 验证 → 修复"的循环。Reflection Agent 将这个循环内化到 AI 系统本身。
 
-**适用场景：输出质量难以用规则验证，但 LLM 自身能感知质量差异的任务——代码生成、文档写作、SQL 优化、翻译质量检查。
+**适用场景**：输出质量难以用规则验证，但 LLM 自身能感知质量差异的任务——代码生成、文档写作、SQL 优化、翻译质量检查。
 
 ### Memory 模块：追踪执行与反思轨迹
 
@@ -230,11 +230,11 @@ if __name__ == "__main__":
 
 ## ✅ 本章小结
 
-本章依赖**：
-- 依赖第3章的 `invoke` 同步接口**：`_execute_task`、`_reflect_on_result`、`_refine_result` 三个阶段都通过 `invoke` 同步调用 LLM
-- 依赖第1章的感知-决策-执行循环**：Reflection 本质上是在执行循环外套了一层"质量验证循环"
+**本章依赖**：
+- 依赖第3章的 `invoke` 同步接口：`_execute_task`、`_reflect_on_result`、`_refine_result` 三个阶段都通过 `invoke` 同步调用 LLM
+- 依赖第1章的感知-决策-执行循环：Reflection 本质上是在执行循环外套了一层"质量验证循环"
 
 **后续应用**：
 - 本章的 **Memory 模块（工作记忆 vs 持久会话）思想在第9章 SessionStore 中得到工程化：`SessionStore` 提供跨轮次的持久化能力，而 `Memory` 只在单次任务生命周期内存活
-- 本章的 **`max_iterations` 防无限循环设计思想在第10章熔断器中得到升级：CircuitBreaker 从"次数限制"演化为"失败率驱动的动态熔断"
+- 本章的 `max_iterations` 防无限循环设计思想在第10章熔断器中得到升级：CircuitBreaker 从"次数限制"演化为"失败率驱动的动态熔断"
 - 本章的 **Reflection 范式**在第13–15章企业实战中可选择性地叠加在 ReAct 或 Plan-Solve 之上，形成"生成 → 验证 → 修正"的高质量输出管道

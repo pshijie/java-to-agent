@@ -32,7 +32,7 @@ description: 理解 GSSC 流水线与 token 预算管理，构建生产级上下
 
 ### 为什么需要上下文工程
 
-**结论：LLM 的上下文窗口是有限且昂贵的资源。当 Agent 运行多轮后，历史消息 + 工具结果 + 知识库内容可能超过窗口上限，上下文工程的任务是：在 token 预算内，最大化信息密度。
+**结论**：LLM 的上下文窗口是有限且昂贵的资源。当 Agent 运行多轮后，历史消息 + 工具结果 + 知识库内容可能超过窗口上限，上下文工程的任务是：在 token 预算内，最大化信息密度。
 
 与 Java 后端的 HTTP 请求处理类比：上下文窗口就像 JVM 堆内存——无限制地堆入数据会导致 OOM（超出 token 限制）或性能下降（token 越多，推理越慢越贵）。`ContextBuilder` 相当于一个智能的"内存管理器"，自动决定哪些信息值得保留、哪些可以丢弃。
 
@@ -102,7 +102,7 @@ logger.info("查询订单状态");
 MDC.clear();
 ```
 
-两者都是"信息包 + 元数据"模式。差别在于：`ContextPacket` 的元数据影响信息是否被 LLM 看到**，MDC 的元数据影响**日志如何被处理**。
+两者都是"信息包 + 元数据"模式。差别在于：`ContextPacket` 的元数据影响信息是否被 LLM 看到，MDC 的元数据影响**日志如何被处理**。
 :::
 
 ### Select 阶段：评分与预算控制
@@ -312,9 +312,9 @@ if __name__ == "__main__":
 ## ✅ 本章小结
 
 **本章依赖**：
-- 依赖第3章的 **LLM 消息协议：`ContextBuilder` 的最终输出是注入到 `invoke` 的 Prompt 消息列表
+- 依赖第3章的 **LLM 消息协议**：`ContextBuilder` 的最终输出是注入到 `invoke` 的 Prompt 消息列表
 - 依赖第7章的 **工具系统**：工具执行结果以 `ContextPacket`（`type: "tool_result"`）的形式进入 GSSC 流水线
 
-后续应用**：
-- 本章的 `ContextPacket` 信息包机制**在第9章会话持久化中得到延伸：`SessionStore` 将完整的对话历史持久化，下次恢复时再通过 `ContextBuilder` 重建上下文
+**后续应用**：
+- 本章的 `ContextPacket` 信息包机制在第9章会话持久化中得到延伸：`SessionStore` 将完整的对话历史持久化，下次恢复时再通过 `ContextBuilder` 重建上下文
 - 本章的 token 预算管理**在第14章数据查询 Agent 中直接应用，通过 `ContextConfig` 动态控制 SQL 生成 Prompt 的信息密度

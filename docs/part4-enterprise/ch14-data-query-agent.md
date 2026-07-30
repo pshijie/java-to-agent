@@ -48,9 +48,9 @@ LLM 的"记忆力"有上限（token 窗口），当对话轮次增多后，早�
 类比 Java：相当于 Hibernate 的懒加载 + 分页查询——不是把数据库全部 load 进内存，而是按需加载最相关的部分。
 
 核心概念：
-- `ContextPacket`**：一个信息包，包含内容本身 + 相关性评分 + token 消耗量
-- **`relevance_score`：0.0–1.0，表示这段信息对当前问题的相关程度，评分越高越优先保留
-- `builder.build()`**：执行 4 步流水线（收集 → 评分筛选 → 结构化 → 压缩），最终输出一段经过精选的 Prompt 文本
+- `ContextPacket`：一个信息包，包含内容本身 + 相关性评分 + token 消耗量
+- **`relevance_score`**：0.0–1.0，表示这段信息对当前问题的相关程度，评分越高越优先保留
+- `builder.build()`：执行 4 步流水线（收集 → 评分筛选 → 结构化 → 压缩），最终输出一段经过精选的 Prompt 文本
 :::
 
 在数据查询场景中，数据库 Schema（表结构）对 SQL 生成**至关重要**——没有 Schema，LLM 不知道有哪些表、哪些字段可用。因此我们将 Schema 以 `relevance_score=1.0`（最高分）注入，确保它永远不会被筛选器丢弃，不管对话历史多长。
@@ -318,7 +318,7 @@ public String query(HttpSession session, String naturalLanguage) {
 **本章依赖**：
 - 依赖第5章的 **Plan-Solve 范式**：分步生成 SQL 的五步计划直接映射到 `Planner.plan()` 的输出
 - 依赖第8章的 ContextBuilder：Schema 以 `relevance_score=1.0` 的 `ContextPacket` 强制注入，确保 LLM 始终看到完整的表结构
-- 依赖第9章的 SessionStore**：每轮查询后自动持久化，支持跨请求的多轮修正对话
+- 依赖第9章的 SessionStore：每轮查询后自动持久化，支持跨请求的多轮修正对话
 - 依赖第12章的 **TraceLogger**：记录每次 SQL 生成的完整 Plan-Solve 链路，方便排查生成质量问题
 
 **后续应用**：

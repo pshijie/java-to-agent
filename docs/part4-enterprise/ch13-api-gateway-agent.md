@@ -266,9 +266,9 @@ if __name__ == "__main__":
 
 **本章依赖**：
 - 依赖第4章的 **ReAct 循环**：`ReActAgent` 驱动路由决策的推理流程
-- 依赖第7章的 ToolRegistry**：统一管理三个路由工具，并内置熔断保护
-- 依赖第10章的 **CircuitBreaker：`check_health` 工具如果连续返回 ERROR，自动熔断
-- 依赖第12章的 TraceLogger**：记录每次路由决策的完整链路，支持生产问题回溯
+- 依赖第7章的 ToolRegistry：统一管理三个路由工具，并内置熔断保护
+- 依赖第10章的 **CircuitBreaker**：`check_health` 工具如果连续返回 ERROR，自动熔断
+- 依赖第12章的 TraceLogger：记录每次路由决策的完整链路，支持生产问题回溯
 
 **后续应用**：
 - 本章的 **多工具组合模式**（发现→健康检查→决策执行）在第15章多 Agent 系统中扩展为多 Agent 协同：不同子代理负责不同的专项任务

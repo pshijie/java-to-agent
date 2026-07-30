@@ -294,10 +294,10 @@ results = await asyncio.gather(
 
 ## ✅ 本章小结
 
-本章依赖**：
-- 依赖第4章的 **ReAct 循环：Orchestrator 和所有 Sub-Agent 均使用 `ReActAgent` 实现
+**本章依赖**：
+- 依赖第4章的 **ReAct 循环**：Orchestrator 和所有 Sub-Agent 均使用 `ReActAgent` 实现
 - 依赖第10章的 **CircuitBreaker**：每个 Sub-Agent 的工具注册表配置了独立的熔断器，防止处置操作失败时级联阻塞
 - 依赖第11章的 **TaskTool**：Orchestrator 通过 `TaskTool` 触发 Sub-Agent，实现上下文隔离
-- 依赖第12章的 TraceLogger**：Orchestrator 层的 TraceLogger 记录跨 Agent 的协调链路
+- 依赖第12章的 TraceLogger：Orchestrator 层的 TraceLogger 记录跨 Agent 的协调链路
 
 **全局知识链终点**：本章综合运用了 LLM 基础（第3章）→ ReAct 范式（第4章）→ 工具系统（第7章）→ 熔断器（第10章）→ 子代理（第11章）→ 可观测性（第12章）的完整链条，实现了一个具有生产级工程质量的多 Agent 自动化运维系统。
