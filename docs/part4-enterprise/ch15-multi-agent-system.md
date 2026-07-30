@@ -17,7 +17,7 @@ description: 综合运用 ReAct + TaskTool + TraceLogger + CircuitBreaker，构�
 <span style="background:#3b82f6;color:#fff;padding:6px 14px;border-radius:8px;font-weight:700;border:2px solid #1d4ed8">第15章 多Agent系统</span>
 </div>
 
-本章是全局知识链的终点，综合运用手册中所有核心组件，构建一个完整的企业级多 Agent 系统：**监控 Agent** 发现异常 → **分析 Agent** 定位根因 → **处置 Agent 执行修复，形成自动化的 AIOps 工作流。
+本章是全局知识链的终点，综合运用手册中所有核心组件，构建一个完整的企业级多 Agent 系统：**监控 Agent** 发现异常 → **分析 Agent** 定位根因 → **处置 Agent** 执行修复，形成自动化的 AIOps 工作流。修复，形成自动化的 AIOps 工作流。
 
 ## 🎯 本章你能学到什么
 

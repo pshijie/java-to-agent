@@ -317,4 +317,4 @@ if __name__ == "__main__":
 
 **后续应用**：
 - 本章的 `ContextPacket` 信息包机制在第9章会话持久化中得到延伸：`SessionStore` 将完整的对话历史持久化，下次恢复时再通过 `ContextBuilder` 重建上下文
-- 本章的 token 预算管理**在第14章数据查询 Agent 中直接应用，通过 `ContextConfig` 动态控制 SQL 生成 Prompt 的信息密度
+- 本章的 token 预算管理在第14章数据查询 Agent 中直接应用，通过 `ContextConfig` 动态控制 SQL 生成 Prompt 的信息密度

@@ -202,7 +202,7 @@ public List<Record> search(
 // Spring 自动解析 HTTP query string → 方法参数，原理相同
 ```
 
-两者都是"从方法签名反射出参数列表"——Python 用 `inspect.signature()`，Java 用 `java.lang.reflect.Parameter`。核心思想：**约定优于配置，方法签名本身就是 Schema，不需要额外写配置文件。
+两者都是"从方法签名反射出参数列表"——Python 用 `inspect.signature()`，Java 用 `java.lang.reflect.Parameter`。核心思想：**约定优于配置**，方法签名本身就是 Schema，不需要额外写配置文件。
 :::
 
 **完整流程图示**

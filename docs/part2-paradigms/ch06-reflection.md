@@ -235,6 +235,6 @@ if __name__ == "__main__":
 - 依赖第1章的感知-决策-执行循环：Reflection 本质上是在执行循环外套了一层"质量验证循环"
 
 **后续应用**：
-- 本章的 **Memory 模块（工作记忆 vs 持久会话）思想在第9章 SessionStore 中得到工程化：`SessionStore` 提供跨轮次的持久化能力，而 `Memory` 只在单次任务生命周期内存活
+- 本章的 Memory 模块（工作记忆 vs 持久会话）思想在第9章 SessionStore 中得到工程化：`SessionStore` 提供跨轮次的持久化能力，而 `Memory` 只在单次任务生命周期内存活
 - 本章的 `max_iterations` 防无限循环设计思想在第10章熔断器中得到升级：CircuitBreaker 从"次数限制"演化为"失败率驱动的动态熔断"
 - 本章的 **Reflection 范式**在第13–15章企业实战中可选择性地叠加在 ReAct 或 Plan-Solve 之上，形成"生成 → 验证 → 修正"的高质量输出管道
